@@ -1,0 +1,28 @@
+{
+  "name": "mad geeked",
+  "logo": "assets/chanceify.png",
+  "coffee": {
+    "label": "buy me a honey",
+    "emoji": "🍯",
+    "url": "https://buymeacoffee.com/madlygeeked"
+  },
+  "socials": [
+    { "name": "github", "url": "https://github.com/madlygeeked", "public": true }
+  ],
+  "projects": [
+    {
+      "name": "chanceify™",
+      "tagline": "Music Reimagined",
+      "logo": "assets/chanceify.png",
+      "public": true,
+      "facts": [
+        "Needs Spotify Premium",
+        "Last.fm scrobbling",
+        "Made with love"
+      ],
+      "links": [
+        { "label": "Download", "url": "https://github.com/madlygeeked/chanceify/releases", "primary": true }
+      ]
+    }
+  ]
+}

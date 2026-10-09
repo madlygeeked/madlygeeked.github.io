@@ -3,169 +3,204 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>madlygeeked</title>
-<meta name="description" content="chance builds small, fast things. Home of chanceify, a music player that stays out of your way.">
-<meta name="theme-color" content="#0e1014">
-<meta property="og:title" content="madlygeeked">
-<meta property="og:description" content="chance builds small, fast things. Home of chanceify.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e1014'/%3E%3Crect x='12' y='30' width='7' height='22' rx='3' fill='%237c8cff'/%3E%3Crect x='23' y='16' width='7' height='36' rx='3' fill='%237c8cff'/%3E%3Crect x='34' y='24' width='7' height='28' rx='3' fill='%237c8cff'/%3E%3Crect x='45' y='36' width='7' height='16' rx='3' fill='%237c8cff'/%3E%3C/svg%3E">
+<title>mad geeked</title>
+<meta name="description" content="mad geeked">
+<meta name="theme-color" content="#0c0a14">
+<meta property="og:title" content="mad geeked">
+<meta property="og:image" content="assets/chanceify.png">
+<link rel="icon" type="image/png" href="assets/favicon.png">
 <style>
   :root {
-    --bg: #0e1014;
-    --panel: #161922;
-    --line: #262b38;
-    --text: #e9ecf5;
-    --dim: #8b91a3;
-    --accent: #7c8cff;
-    --on-accent: #0e1014;
-    --warm: #ffb86b;
+    --bg: #0c0a14;
+    --panel: #15121f;
+    --line: #272238;
+    --text: #f1eefa;
+    --dim: #9a94b0;
+    --mint: #3eeaa4;
+    --pink: #f25ca2;
+    --honey: #ffc247;
     --display: "Segoe UI Variable Display", "Segoe UI", ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
     --body: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
   }
-  :root[data-theme="light"] {
-    --bg: #f6f7fb; --panel: #ffffff; --line: #dfe2ee; --text: #14161d;
-    --dim: #5d6478; --accent: #4a5bd8; --on-accent: #ffffff; --warm: #b8650a;
-  }
   * { box-sizing: border-box; }
   html { color-scheme: dark; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font: 17px/1.6 var(--body);
-    -webkit-font-smoothing: antialiased;
-  }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
   a { color: inherit; }
-  a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; border-radius: 6px; }
   .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
 
-  /* The bars: the one moving thing on the page, drawn like chanceify's visualizer. */
-  .bars {
-    display: flex; align-items: flex-end; gap: 5px;
-    height: 120px; margin: 0 0 28px;
-  }
-  .bars i {
-    flex: 1; max-width: 14px; border-radius: 4px 4px 2px 2px;
-    background: var(--accent);
-    height: var(--h, 40%);
-    transform-origin: bottom;
-    animation: dance var(--d, 1.6s) ease-in-out infinite alternate;
-    animation-delay: var(--o, 0s);
-    opacity: .9;
-  }
-  @keyframes dance { from { transform: scaleY(.28); } to { transform: scaleY(1); } }
+  header { display: flex; align-items: center; gap: 22px; padding: 64px 0 28px; }
+  header img { width: clamp(56px, 11vw, 92px); height: auto; flex: none; }
+  h1 { font: 800 clamp(44px, 11vw, 104px)/.92 var(--display); letter-spacing: -.045em; margin: 0; }
 
-  header { padding: 72px 0 56px; }
-  h1 {
-    font: 800 clamp(48px, 11vw, 112px)/.92 var(--display);
-    letter-spacing: -.045em;
-    margin: 0 0 22px;
-  }
-  .lede { max-width: 34ch; font-size: clamp(20px, 3.2vw, 26px); line-height: 1.35; color: var(--text); margin: 0; }
-  .lede span { color: var(--dim); }
+  /* Flow: sheets of colour folded over each other, drawn like chanceify's visualizer. */
+  .flow { display: block; width: 100%; height: clamp(150px, 26vw, 230px); }
 
-  h2 { font: 700 15px/1 var(--display); letter-spacing: .01em; color: var(--dim); margin: 0 0 18px; }
-  section { padding: 24px 0 40px; }
-
-  .project {
-    display: grid; gap: 22px;
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    padding: 28px;
-  }
-  .project h3 { font: 800 34px/1.05 var(--display); letter-spacing: -.03em; margin: 0 0 6px; }
-  .project .tag { color: var(--accent); font-weight: 600; margin: 0 0 14px; }
-  .project p { margin: 0 0 12px; max-width: 60ch; }
-  .facts { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; color: var(--dim); font-size: 15px; }
-  .facts li::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-right: 10px; }
-  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
-  .btn {
-    display: inline-block; text-decoration: none; font-weight: 650;
-    padding: 11px 18px; border-radius: 999px;
-    border: 1px solid var(--line); background: transparent; color: var(--text);
-    transition: background .15s, border-color .15s;
-  }
-  .btn:hover { border-color: var(--accent); }
-  .btn.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+  section { padding: 40px 0 8px; }
+  .project { display: grid; gap: 22px; background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 28px; align-items: center; }
+  .project .head { display: flex; align-items: center; gap: 18px; }
+  .project .head img { width: 72px; height: 72px; flex: none; }
+  .project h2 { font: 800 34px/1.05 var(--display); letter-spacing: -.03em; margin: 0; }
+  .project .tag { margin: 4px 0 0; font-weight: 650; background: linear-gradient(90deg, var(--mint), var(--pink)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .facts { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; color: var(--dim); font-size: 16px; }
+  .facts li::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--mint); margin-right: 10px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .btn { display: inline-block; text-decoration: none; font-weight: 650; padding: 11px 20px; border-radius: 999px; border: 1px solid var(--line); color: var(--text); transition: border-color .15s, filter .15s; }
+  .btn:hover { border-color: var(--mint); }
+  .btn.primary { background: var(--mint); color: #08150f; border-color: var(--mint); }
   .btn.primary:hover { filter: brightness(1.08); }
+  .btn.honey { border-color: var(--honey); color: var(--honey); }
+  .btn.honey:hover { background: rgba(255,194,71,.12); }
 
-  .coffee { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid var(--line); padding-top: 28px; }
-  .coffee p { margin: 0; max-width: 46ch; }
-  .btn.warm { border-color: var(--warm); color: var(--warm); }
-  .btn.warm:hover { background: color-mix(in srgb, var(--warm) 14%, transparent); }
+  .more { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 36px 0 64px; }
+  .socials { display: flex; flex-wrap: wrap; gap: 18px; }
+  .socials a { color: var(--dim); text-decoration: none; }
+  .socials a:hover { color: var(--text); }
 
-  footer { padding: 28px 0 56px; color: var(--dim); font-size: 15px; }
-  footer a { text-decoration-color: var(--line); text-underline-offset: 3px; }
-
-  @media (min-width: 720px) {
-    .project { grid-template-columns: 1.4fr 1fr; align-items: start; padding: 34px; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .bars i { animation: none; transform: scaleY(.7); }
-  }
+  @media (min-width: 720px) { .project { grid-template-columns: 1.3fr 1fr; padding: 34px; } }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <div class="bars" aria-hidden="true" id="bars"></div>
-    <h1>madlygeeked</h1>
-    <p class="lede">I'm chance. I build small, fast things. <span>Right now that's a music player called chanceify.</span></p>
+    <img id="logo" alt="" hidden>
+    <h1 id="name">mad geeked</h1>
   </header>
-
+</div>
+<canvas class="flow" id="flow" aria-hidden="true"></canvas>
+<div class="wrap">
   <main>
-    <section aria-labelledby="work">
-      <h2 id="work">What I'm making</h2>
-      <article class="project">
-        <div>
-          <h3>chanceify&trade;</h3>
-          <p class="tag">music reimagined .</p>
-          <p>A small Spotify player for your desktop. It plays your music, counts what you listen to, and keeps everything it saves in one folder next to the app.</p>
-          <div class="actions">
-            <a class="btn primary" href="https://github.com/madlygeeked/chanceify/releases">Download</a>
-            <a class="btn" href="/chanceify/">Read the guide</a>
-            <a class="btn" href="https://github.com/madlygeeked/chanceify">Source code</a>
-          </div>
-        </div>
-        <ul class="facts">
-          <li>Needs Spotify Premium</li>
-          <li>Music stats for 7 days, 30 days or all time</li>
-          <li>Last.fm scrobbling</li>
-          <li>16 themes, or pick your own colours</li>
-          <li>No tracking. Free and open source (AGPL-3.0)</li>
-        </ul>
-      </article>
-    </section>
-
-    <section class="coffee" aria-label="Support">
-      <p>chanceify is free. If it makes your day better, you can buy me a coffee.</p>
-      <a class="btn warm" href="https://buymeacoffee.com/madlygeeked">Buy me a coffee</a>
-    </section>
+    <div id="projects"></div>
+    <div class="more">
+      <a class="btn honey" id="coffee" hidden></a>
+      <nav class="socials" id="socials" aria-label="links"></nav>
+    </div>
   </main>
-
-  <footer>
-    Built with love by <a href="https://github.com/madlygeeked">chance</a>.
-    Inspired by <a href="https://www.spotify.com">Spotify</a>, <a href="https://github.com/crmne/spotifast">Spotifast</a> and <a href="https://spicetify.app">Spicetify</a>.
-  </footer>
 </div>
 <script>
-  // Thirty-two bars with their own heights and tempos, like the player's visualizer.
-  (function () {
-    var box = document.getElementById("bars");
-    if (!box) return;
-    var seed = 7;
-    function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
-    for (var i = 0; i < 32; i++) {
-      var bar = document.createElement("i");
-      // A low rumble at the left, a taller middle, a quiet tail: the shape of a song.
-      var shape = Math.sin((i / 31) * Math.PI) * 0.55 + 0.35;
-      bar.style.setProperty("--h", Math.round((shape + rnd() * 0.12) * 100) + "%");
-      bar.style.setProperty("--d", (0.9 + rnd() * 1.4).toFixed(2) + "s");
-      bar.style.setProperty("--o", (-rnd() * 2).toFixed(2) + "s");
-      box.appendChild(bar);
+/* Content comes from projects.json: edit that file, never this one. */
+(function () {
+  function el(tag, props, kids) {
+    var n = document.createElement(tag);
+    Object.keys(props || {}).forEach(function (k) { n[k] = props[k]; });
+    (kids || []).forEach(function (c) { n.appendChild(c); });
+    return n;
+  }
+  function render(d) {
+    if (d.name) { document.getElementById("name").textContent = d.name; document.title = d.name; }
+    if (d.logo) { var l = document.getElementById("logo"); l.src = d.logo; l.hidden = false; }
+    var box = document.getElementById("projects");
+    (d.projects || []).filter(function (p) { return p.public; }).forEach(function (p) {
+      var head = el("div", { className: "head" }, []);
+      if (p.logo) head.appendChild(el("img", { src: p.logo, alt: "", width: 72, height: 72 }));
+      var t = el("div", {}, [el("h2", { textContent: p.name })]);
+      if (p.tagline) t.appendChild(el("p", { className: "tag", textContent: p.tagline }));
+      head.appendChild(t);
+      var left = el("div", {}, [head]);
+      var actions = el("div", { className: "actions" }, []);
+      (p.links || []).forEach(function (a) {
+        actions.appendChild(el("a", { className: "btn" + (a.primary ? " primary" : ""), href: a.url, textContent: a.label }));
+      });
+      left.appendChild(actions);
+      var facts = el("ul", { className: "facts" }, (p.facts || []).map(function (f) { return el("li", { textContent: f }); }));
+      box.appendChild(el("section", {}, [el("article", { className: "project" }, [left, facts])]));
+    });
+    if (d.coffee && d.coffee.url) {
+      var c = document.getElementById("coffee");
+      c.href = d.coffee.url;
+      c.textContent = d.coffee.label + (d.coffee.emoji ? " " + d.coffee.emoji : "");
+      c.hidden = false;
     }
-  })();
+    var s = document.getElementById("socials");
+    (d.socials || []).filter(function (x) { return x.public; }).forEach(function (x) {
+      s.appendChild(el("a", { href: x.url, textContent: x.name }));
+    });
+  }
+  fetch("projects.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).then(render).catch(function () {});
+})();
+
+/* Flow, ported from chanceify's player-bar visualizer: five sheets of colour, each riding on a
+   spectrum and swinging slowly, folded over one another and faded toward the foot. */
+(function () {
+  var cv = document.getElementById("flow");
+  var ctx = cv.getContext("2d");
+  var layer = document.createElement("canvas");
+  var lx = layer.getContext("2d");
+  var POINTS = 96, SHEETS = 5, DEPTH = 0.75, OFFSET = 0.06, SWING = 0.34, DRIFT = 0.13;
+  var LOW = "62,234,164", HIGH = "242,92,162";
+  var W = 0, H = 0, dpr = 1;
+  function size() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = layer.width = Math.round(W * dpr);
+    cv.height = layer.height = Math.round(H * dpr);
+  }
+  function levels(t) {
+    var out = new Array(POINTS);
+    var beat = 0.55 + 0.45 * Math.pow(Math.max(0, Math.sin(t * 3.1)), 2);
+    for (var i = 0; i < POINTS; i++) {
+      var x = i / (POINTS - 1);
+      var env = 0.3 + 0.7 * Math.pow(1 - x, 1.3);
+      var n = 0.5 + 0.5 * Math.sin(x * 19 + t * 2.3) * Math.cos(x * 7 - t * 1.1);
+      var v = env * (0.3 + 0.7 * n) * (0.65 + 0.35 * beat * (1 - x * 0.6));
+      out[i] = Math.max(0, Math.min(1, v));
+    }
+    return out;
+  }
+  function draw(t) {
+    var lv = levels(t), phase = t * DRIFT;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var bass = 0, k = Math.floor(POINTS / 8);
+    for (var b = 0; b < k; b++) bass += lv[b];
+    bass /= k;
+    var g = ctx.createLinearGradient(0, H / 2, 0, H);
+    g.addColorStop(0, "rgba(" + LOW + ",0)");
+    g.addColorStop(1, "rgba(" + LOW + "," + (0.5 * 0.6 * (0.4 + bass * bass)).toFixed(3) + ")");
+    ctx.fillStyle = g; ctx.fillRect(0, H / 2, W, H / 2);
+    for (var s = 0; s < SHEETS; s++) {
+      var back = s / Math.max(SHEETS - 1, 1);
+      var dir = s % 2 === 0 ? 1 : -1;
+      var swing = (phase * Math.PI * 2 + back * 1.7) * dir;
+      var rest = H - H * (0.04 + back * DEPTH * 0.62);
+      var reach = H * DEPTH * (0.72 - back * 0.3);
+      var alpha = Math.max(0.5 - back * 0.3, 0.08) * 1.5;
+      var shift = Math.round(s * OFFSET * POINTS) % POINTS;
+      var top = H;
+      lx.setTransform(1, 0, 0, 1, 0, 0);
+      lx.clearRect(0, 0, layer.width, layer.height);
+      lx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      lx.globalCompositeOperation = "source-over";
+      lx.beginPath();
+      lx.moveTo(0, H);
+      for (var i = 0; i < POINTS; i++) {
+        var across = i / (POINTS - 1);
+        var wave = Math.sin(across * Math.PI * 2 * 1.3 + swing);
+        var y = rest - lv[(i + shift) % POINTS] * reach * (0.75 + 0.25 * wave) - wave * H * SWING * 0.28;
+        if (y < top) top = y;
+        lx.lineTo(across * W, y);
+      }
+      lx.lineTo(W, H); lx.closePath();
+      var hg = lx.createLinearGradient(0, 0, W, 0);
+      hg.addColorStop(0, "rgb(" + LOW + ")"); hg.addColorStop(1, "rgb(" + HIGH + ")");
+      lx.fillStyle = hg; lx.fill();
+      lx.globalCompositeOperation = "destination-in";
+      var vg = lx.createLinearGradient(0, top, 0, H);
+      vg.addColorStop(0, "rgba(0,0,0,1)"); vg.addColorStop(1, "rgba(0,0,0,0)");
+      lx.fillStyle = vg; lx.fillRect(0, 0, W, H);
+      ctx.globalAlpha = Math.min(alpha, 1);
+      ctx.drawImage(layer, 0, 0, W, H);
+      ctx.globalAlpha = 1;
+    }
+  }
+  var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var t0 = performance.now();
+  function frame(now) { draw((now - t0) / 1000 + 3); if (!still) requestAnimationFrame(frame); }
+  size();
+  window.addEventListener("resize", function () { size(); if (still) draw(3); });
+  requestAnimationFrame(frame);
+})();
 </script>
 </body>
 </html>
