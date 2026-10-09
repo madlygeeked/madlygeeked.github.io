@@ -22,24 +22,12 @@
     --display: "Segoe UI Variable Display", "Segoe UI", ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
     --body: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
   }
-  @media (prefers-color-scheme: light) {
-    :root:not([data-theme="dark"]) {
-      --bg: #f6f7fb;
-      --panel: #ffffff;
-      --line: #dfe2ee;
-      --text: #14161d;
-      --dim: #5d6478;
-      --accent: #4a5bd8;
-      --on-accent: #ffffff;
-      --warm: #b8650a;
-    }
-  }
   :root[data-theme="light"] {
     --bg: #f6f7fb; --panel: #ffffff; --line: #dfe2ee; --text: #14161d;
     --dim: #5d6478; --accent: #4a5bd8; --on-accent: #ffffff; --warm: #b8650a;
   }
   * { box-sizing: border-box; }
-  html { color-scheme: dark light; }
+  html { color-scheme: dark; }
   body {
     margin: 0;
     background: var(--bg);
