@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>madlygeeked</title>
+<meta name="description" content="chance builds small, fast things. Home of chanceify, a music player that stays out of your way.">
+<meta name="theme-color" content="#0e1014">
+<meta property="og:title" content="madlygeeked">
+<meta property="og:description" content="chance builds small, fast things. Home of chanceify.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e1014'/%3E%3Crect x='12' y='30' width='7' height='22' rx='3' fill='%237c8cff'/%3E%3Crect x='23' y='16' width='7' height='36' rx='3' fill='%237c8cff'/%3E%3Crect x='34' y='24' width='7' height='28' rx='3' fill='%237c8cff'/%3E%3Crect x='45' y='36' width='7' height='16' rx='3' fill='%237c8cff'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #0e1014;
+    --panel: #161922;
+    --line: #262b38;
+    --text: #e9ecf5;
+    --dim: #8b91a3;
+    --accent: #7c8cff;
+    --on-accent: #0e1014;
+    --warm: #ffb86b;
+    --display: "Segoe UI Variable Display", "Segoe UI", ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
+    --body: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #f6f7fb;
+      --panel: #ffffff;
+      --line: #dfe2ee;
+      --text: #14161d;
+      --dim: #5d6478;
+      --accent: #4a5bd8;
+      --on-accent: #ffffff;
+      --warm: #b8650a;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #f6f7fb; --panel: #ffffff; --line: #dfe2ee; --text: #14161d;
+    --dim: #5d6478; --accent: #4a5bd8; --on-accent: #ffffff; --warm: #b8650a;
+  }
+  * { box-sizing: border-box; }
+  html { color-scheme: dark light; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.6 var(--body);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+
+  /* The bars: the one moving thing on the page, drawn like chanceify's visualizer. */
+  .bars {
+    display: flex; align-items: flex-end; gap: 5px;
+    height: 120px; margin: 0 0 28px;
+  }
+  .bars i {
+    flex: 1; max-width: 14px; border-radius: 4px 4px 2px 2px;
+    background: var(--accent);
+    height: var(--h, 40%);
+    transform-origin: bottom;
+    animation: dance var(--d, 1.6s) ease-in-out infinite alternate;
+    animation-delay: var(--o, 0s);
+    opacity: .9;
+  }
+  @keyframes dance { from { transform: scaleY(.28); } to { transform: scaleY(1); } }
+
+  header { padding: 72px 0 56px; }
+  h1 {
+    font: 800 clamp(48px, 11vw, 112px)/.92 var(--display);
+    letter-spacing: -.045em;
+    margin: 0 0 22px;
+  }
+  .lede { max-width: 34ch; font-size: clamp(20px, 3.2vw, 26px); line-height: 1.35; color: var(--text); margin: 0; }
+  .lede span { color: var(--dim); }
+
+  h2 { font: 700 15px/1 var(--display); letter-spacing: .01em; color: var(--dim); margin: 0 0 18px; }
+  section { padding: 24px 0 40px; }
+
+  .project {
+    display: grid; gap: 22px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 28px;
+  }
+  .project h3 { font: 800 34px/1.05 var(--display); letter-spacing: -.03em; margin: 0 0 6px; }
+  .project .tag { color: var(--accent); font-weight: 600; margin: 0 0 14px; }
+  .project p { margin: 0 0 12px; max-width: 60ch; }
+  .facts { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; color: var(--dim); font-size: 15px; }
+  .facts li::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-right: 10px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+  .btn {
+    display: inline-block; text-decoration: none; font-weight: 650;
+    padding: 11px 18px; border-radius: 999px;
+    border: 1px solid var(--line); background: transparent; color: var(--text);
+    transition: background .15s, border-color .15s;
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+  .btn.primary:hover { filter: brightness(1.08); }
+
+  .coffee { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid var(--line); padding-top: 28px; }
+  .coffee p { margin: 0; max-width: 46ch; }
+  .btn.warm { border-color: var(--warm); color: var(--warm); }
+  .btn.warm:hover { background: color-mix(in srgb, var(--warm) 14%, transparent); }
+
+  footer { padding: 28px 0 56px; color: var(--dim); font-size: 15px; }
+  footer a { text-decoration-color: var(--line); text-underline-offset: 3px; }
+
+  @media (min-width: 720px) {
+    .project { grid-template-columns: 1.4fr 1fr; align-items: start; padding: 34px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bars i { animation: none; transform: scaleY(.7); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="bars" aria-hidden="true" id="bars"></div>
+    <h1>madlygeeked</h1>
+    <p class="lede">I'm chance. I build small, fast things. <span>Right now that's a music player called chanceify.</span></p>
+  </header>
+
+  <main>
+    <section aria-labelledby="work">
+      <h2 id="work">What I'm making</h2>
+      <article class="project">
+        <div>
+          <h3>chanceify&trade;</h3>
+          <p class="tag">music reimagined .</p>
+          <p>A small Spotify player for your desktop. It plays your music, counts what you listen to, and keeps everything it saves in one folder next to the app.</p>
+          <div class="actions">
+            <a class="btn primary" href="https://github.com/madlygeeked/chanceify/releases">Download</a>
+            <a class="btn" href="/chanceify/">Read the guide</a>
+            <a class="btn" href="https://github.com/madlygeeked/chanceify">Source code</a>
+          </div>
+        </div>
+        <ul class="facts">
+          <li>Needs Spotify Premium</li>
+          <li>Music stats for 7 days, 30 days or all time</li>
+          <li>Last.fm scrobbling</li>
+          <li>16 themes, or pick your own colours</li>
+          <li>No tracking. Free and open source (AGPL-3.0)</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="coffee" aria-label="Support">
+      <p>chanceify is free. If it makes your day better, you can buy me a coffee.</p>
+      <a class="btn warm" href="https://buymeacoffee.com/madlygeeked">Buy me a coffee</a>
+    </section>
+  </main>
+
+  <footer>
+    Built with love by <a href="https://github.com/madlygeeked">chance</a>.
+    Inspired by <a href="https://www.spotify.com">Spotify</a>, <a href="https://github.com/crmne/spotifast">Spotifast</a> and <a href="https://spicetify.app">Spicetify</a>.
+  </footer>
+</div>
+<script>
+  // Thirty-two bars with their own heights and tempos, like the player's visualizer.
+  (function () {
+    var box = document.getElementById("bars");
+    if (!box) return;
+    var seed = 7;
+    function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+    for (var i = 0; i < 32; i++) {
+      var bar = document.createElement("i");
+      // A low rumble at the left, a taller middle, a quiet tail: the shape of a song.
+      var shape = Math.sin((i / 31) * Math.PI) * 0.55 + 0.35;
+      bar.style.setProperty("--h", Math.round((shape + rnd() * 0.12) * 100) + "%");
+      bar.style.setProperty("--d", (0.9 + rnd() * 1.4).toFixed(2) + "s");
+      bar.style.setProperty("--o", (-rnd() * 2).toFixed(2) + "s");
+      box.appendChild(bar);
+    }
+  })();
+</script>
+</body>
+</html>
