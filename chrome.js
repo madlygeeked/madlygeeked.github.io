@@ -37,7 +37,7 @@
   };
   MG.start = function () {
     if (document.getElementById("flow") && !document.getElementById("flow").getAttribute("data-on")) {
-      var s = document.createElement("script"); s.src = SITE + "flow.js?v=4"; document.body.appendChild(s);
+      var s = document.createElement("script"); s.src = SITE + "flow.js?v=5"; document.body.appendChild(s);
     }
   };
   if (!window.MG_MANUAL) {

@@ -19,7 +19,7 @@
     var out = [];
     for (var i = 0; i < POINTS; i++) {
       var x = i / (POINTS - 1);
-      var v = 0.5 + 0.22 * Math.sin(x * 7 + t * 0.9) + 0.14 * Math.sin(x * 12 - t * 0.6);
+      var v = 0.5 + 0.22 * Math.sin(x * 7 - t * 0.9) + 0.14 * Math.sin(x * 12 - t * 0.6);
       out.push(Math.max(0.1, Math.min(1, v * (0.55 + 0.45 * (1 - x * 0.5)))));
     }
     return out;
@@ -29,14 +29,14 @@
     ctx.clearRect(0, 0, W, H);
     for (var s = 0; s < SHEETS; s++) {
       var back = s / (SHEETS - 1);
-      var swing = (phase * Math.PI * 2 + back * 1.7) * (s % 2 ? -1 : 1);
+      var swing = phase * Math.PI * 2 + back * 1.7;
       var rest = H * (0.98 - back * 0.22);
       var reach = H * (0.5 - back * 0.14);
       var alpha = (0.5 - back * 0.22) * ALPHA;
       var pts = [], topY = H;
       for (var i = 0; i < POINTS; i++) {
         var a = i / (POINTS - 1);
-        var wave = Math.sin(a * Math.PI * 2 * 1.1 + swing);
+        var wave = Math.sin(a * Math.PI * 2 * 1.1 - swing);
         var y = rest - lv[i] * reach * (0.8 + 0.2 * wave) - wave * H * SWING * 0.2;
         if (y < topY) topY = y;
         pts.push([-W * 0.03 + a * W * 1.06, y]);

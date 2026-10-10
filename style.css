@@ -73,13 +73,18 @@ body[data-theme] .btn { background: rgba(10, 9, 20, .5); }
 body[data-theme] .btn.primary { background: var(--grad); }
 body[data-theme] .facts, body[data-theme] .socials a { color: #e8e3f5; }
 body[data-theme] .socials a { text-shadow: 0 1px 6px rgba(0, 0, 0, .6); }
-.themes { position: fixed; top: 16px; left: 16px; z-index: 5; display: flex; flex-wrap: wrap; gap: 6px; max-width: calc(100vw - 32px); }
-.themes button { font: 500 14px/1 var(--body); color: #fff; background: rgba(12, 8, 20, .5); border: 1px solid rgba(255, 255, 255, .28); border-radius: 999px; padding: 8px 14px; cursor: pointer; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.themes { position: fixed; top: 16px; left: 16px; z-index: 5; }
+.themes button { font: 500 15px/1 var(--body); color: #fff; background: rgba(12, 8, 20, .55); border: 1px solid rgba(255, 255, 255, .3); border-radius: 999px; cursor: pointer; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 .themes button:hover { border-color: #fff; }
-.themes button[aria-pressed="true"] { background: rgba(255, 255, 255, .9); color: #1a1030; border-color: transparent; }
-
+.themes .tbtn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px 8px 14px; }
+.themes .em { font-size: 18px; line-height: 1; }
+.themes .ar svg { width: 12px; height: 8px; display: block; transition: transform .2s; }
+.themes.open .ar svg { transform: rotate(180deg); }
+.tmenu { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.tmenu[hidden] { display: none; }
+.tmenu button { display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px 8px 12px; }
+.tmenu button[aria-current="true"] { box-shadow: 0 0 0 2px rgba(255, 255, 255, .9); }
+@media (hover: none) { [data-hover-theme] { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; } }
 .top a.brand { flex-direction: row-reverse; }
 body[data-theme] .socials a { background: rgba(30, 16, 4, .62); border: 1px solid rgba(255, 255, 255, .28); border-radius: 999px; padding: 9px 18px; font-weight: 650; color: #fff; text-shadow: none; }
 body[data-theme] .socials a:hover { border-color: #fff; }
-.themes button { font-size: 18px; padding: 7px 12px; }
-.themes button[aria-pressed="true"] { box-shadow: 0 0 0 2px rgba(255, 255, 255, .9); background: rgba(255, 255, 255, .28); color: #fff; }
