@@ -118,7 +118,7 @@ body[data-theme] .facts, body[data-theme] .doc p, body[data-theme] .doc li { tex
 
 /* bear next to every link to madgeeked / chance */
 a.bearlink { white-space: nowrap; }
-a.bearlink img { width: 1.35em; height: 1.35em; vertical-align: -.38em; margin-right: .4em; border-radius: 5px; object-fit: cover; }
+a.bearlink img { width: 1.35em; height: 1.35em; vertical-align: -.38em; margin-left: .4em; border-radius: 5px; object-fit: cover; }
 
 /* phones: the chanceify card is a small row instead of a big block */
 @media (max-width: 600px) {

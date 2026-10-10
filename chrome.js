@@ -47,7 +47,7 @@
       if (!kind) { if (t === "chance") kind = "chance"; else if (t === "madgeeked" || t === "madlygeeked") kind = "madgeeked"; }
       if (!kind) return;
       var i = document.createElement("img"); i.src = MG.asset("assets/bears/" + MG.bear() + ".png"); i.alt = ""; i.width = 22; i.height = 22;
-      a.insertBefore(i, a.firstChild); a.classList.add("bearlink");
+      a.appendChild(i); a.classList.add("bearlink");
     });
   };
   MG.start = function () {
