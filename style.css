@@ -54,3 +54,27 @@ section { padding: 22px 0 8px; }
 .socials a { color: var(--dim); text-decoration: none; }
 .socials a:hover { color: var(--text); }
 @media (min-width: 720px) { .project { grid-template-columns: 1.3fr 1fr; padding: 34px; } }
+
+/* Scenic backgrounds (themes.js). Every theme gets an outline on the name and logo so they read on any scene. */
+#scene { position: fixed; inset: 0; z-index: -2; background: #0a0914; overflow: hidden; }
+#scene img { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; display: block; transition: opacity .5s; }
+body.scenic, body.scenic-docs { background: #0a0914; }
+body.scenic #flow { display: none; }
+body.scenic-docs #flow { opacity: .85; }
+body[data-theme="honey"] { --panel: rgba(50, 24, 6, .55); --line: rgba(255, 220, 160, .28); }
+body[data-theme="autumn"] { --panel: rgba(50, 22, 8, .55); --line: rgba(255, 210, 150, .28); }
+body[data-theme="golden"] { --panel: rgba(40, 10, 20, .55); --line: rgba(255, 200, 170, .28); }
+body[data-theme="lake"] { --panel: rgba(10, 30, 60, .55); --line: rgba(190, 225, 255, .3); }
+body[data-theme="lake-teal"] { --panel: rgba(8, 40, 44, .55); --line: rgba(170, 235, 235, .3); }
+body[data-theme="chanceify"] { --panel: rgba(20, 8, 40, .62); --line: rgba(200, 170, 255, .28); }
+body[data-theme] .brandname { color: #fff; -webkit-text-stroke: 5px rgba(12, 8, 20, .65); paint-order: stroke fill; text-shadow: 0 2px 14px rgba(0, 0, 0, .3); }
+body[data-theme] .top .brand img { filter: drop-shadow(2px 0 0 #1a0f08) drop-shadow(-2px 0 0 #1a0f08) drop-shadow(0 2px 0 #1a0f08) drop-shadow(0 -2px 0 #1a0f08); }
+body[data-theme] .btn.honey { background: rgba(30, 16, 4, .62); }
+body[data-theme] .btn { background: rgba(10, 9, 20, .5); }
+body[data-theme] .btn.primary { background: var(--grad); }
+body[data-theme] .facts, body[data-theme] .socials a { color: #e8e3f5; }
+body[data-theme] .socials a { text-shadow: 0 1px 6px rgba(0, 0, 0, .6); }
+.themes { position: fixed; top: 16px; left: 16px; z-index: 5; display: flex; flex-wrap: wrap; gap: 6px; max-width: calc(100vw - 32px); }
+.themes button { font: 500 14px/1 var(--body); color: #fff; background: rgba(12, 8, 20, .5); border: 1px solid rgba(255, 255, 255, .28); border-radius: 999px; padding: 8px 14px; cursor: pointer; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.themes button:hover { border-color: #fff; }
+.themes button[aria-pressed="true"] { background: rgba(255, 255, 255, .9); color: #1a1030; border-color: transparent; }
