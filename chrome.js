@@ -35,13 +35,25 @@
     Array.prototype.forEach.call(document.querySelectorAll("[data-brand-logo]"), function (n) { if (d.logo) { n.src = MG.asset(d.logo); n.hidden = false; } });
     Array.prototype.forEach.call(document.querySelectorAll("[data-brand-link]"), function (n) { n.href = SITE || "./"; });
   };
+
+  // a little bear next to every link to madgeeked or chance (golden bear for madgeeked, bear-wolf for chance)
+  MG.bears = function () {
+    Array.prototype.forEach.call(document.querySelectorAll("a[href*='github.com/madlygeeked'], a[data-bear]"), function (a) {
+      if (a.classList.contains("bearlink") || a.classList.contains("gh") || a.querySelector("svg")) return;
+      var t = (a.textContent || "").trim().toLowerCase(), kind = a.getAttribute("data-bear");
+      if (!kind) { if (t === "chance") kind = "chance"; else if (t === "madgeeked" || t === "madlygeeked") kind = "madgeeked"; }
+      if (!kind) return;
+      var i = document.createElement("img"); i.src = MG.asset("assets/" + (kind === "chance" ? "chance.png" : "madgeeked.png")); i.alt = ""; i.width = 22; i.height = 22;
+      a.insertBefore(i, a.firstChild); a.classList.add("bearlink");
+    });
+  };
   MG.start = function () {
     if (document.getElementById("flow") && !document.getElementById("flow").getAttribute("data-on")) {
       var s = document.createElement("script"); s.src = SITE + "flow.js?v=5"; document.body.appendChild(s);
     }
   };
   if (!window.MG_MANUAL) {
-    var go = function () { MG.load().then(function (d) { MG.apply(d); MG.start(); }).catch(function () { MG.start(); }); };
+    var go = function () { MG.load().then(function (d) { MG.apply(d); MG.bears(); MG.start(); }).catch(function () { MG.start(); }); };
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go); else go();
   }
 })();
