@@ -27,7 +27,9 @@
       if (dl) actions.appendChild(btn({ label: dl.label, url: dl.url, primary: true }));
       if (p.more) actions.appendChild(btn({ label: "more info", url: p.more }));
       var facts = el("ul", { className: "facts" }, (p.facts || []).map(function (f) { return el("li", { textContent: f }); }));
-      wrap.appendChild(el("section", {}, [el("article", { className: "project" }, [el("div", {}, [h, actions]), facts])]));
+      var art = el("article", { className: "project" }, [el("div", {}, [h, actions]), facts]);
+      if (p.theme) art.setAttribute("data-hover-theme", p.theme);
+      wrap.appendChild(el("section", {}, [art]));
     });
     var more = el("div", { className: "more" }, []);
     if (d.coffee && d.coffee.url) more.appendChild(el("a", { className: "btn honey", href: d.coffee.url, textContent: d.coffee.label + (d.coffee.emoji ? " " + d.coffee.emoji : "") }));
@@ -35,8 +37,8 @@
     s.setAttribute("aria-label", "links");
     (d.socials || []).filter(function (x) { return x.public; }).forEach(function (x) {
       var a = el("a", { href: x.url });
-      if (x.name === "github") { a.className = "gh"; a.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="' + GH + '"/></svg>'; }
       a.appendChild(document.createTextNode(x.name));
+      if (x.name === "github") { a.className = "gh"; a.insertAdjacentHTML("beforeend", '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="' + GH + '"/></svg>'); }
       s.appendChild(a);
     });
     more.appendChild(s);

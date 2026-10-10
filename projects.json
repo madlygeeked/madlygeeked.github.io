@@ -35,7 +35,8 @@
           "url": "https://github.com/madlygeeked/chanceify"
         }
       ],
-      "more": "chanceify/"
+      "more": "chanceify/",
+      "theme": "chanceify"
     }
   ],
   "fonts": {
