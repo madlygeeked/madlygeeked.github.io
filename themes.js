@@ -7,7 +7,7 @@
   var PIN = me ? me.getAttribute("data-theme") : "";
   var T = [
     { id: "honey", label: "🍯", name: "honey" },
-    { id: "golden", label: "☀️", name: "golden hour" },
+    { id: "golden", label: "🏔️", name: "mountain" },
     { id: "lake-teal", label: "🏞️", name: "lake" }
   ];
   var BG = { "honey": "#ffb070", "golden": "#f4806a", "lake-teal": "#a6cdf0", "chanceify": "#2a1850" };
@@ -52,7 +52,7 @@
         var im = new Image(); im.alt = ""; im.decoding = "async"; im.draggable = false;
         im.style.cssText = "position:absolute;max-width:none;display:block;left:" + f2(c.x * k) + "px;top:" + f2(c.y * k) + "px;width:" + Math.ceil(c.w * k) + "px;height:" + Math.ceil(c.h * k) + "px";
         var retried = 0; im.onerror = function () { if (c.f && !retried++) im.src = base + "lay/" + c.f + ".svg?r=" + Date.now(); };
-        im.src = c.f ? base + "lay/" + c.f + ".svg?v=19" : "data:image/svg+xml;charset=utf-8," + encodeURIComponent(man.P[c.s]);
+        im.src = c.f ? base + "lay/" + c.f + ".svg?v=20" : "data:image/svg+xml;charset=utf-8," + encodeURIComponent(man.P[c.s]);
         p.appendChild(im); imgs.push(im);
       }
       function node(n, p) {
@@ -88,7 +88,7 @@
     // the new scene is built and fully decoded off screen, then fades in over the old one. nothing is ever left empty, so there is no black flash.
     function manifest(f) {
       if (mans[f]) return mans[f];
-      var url = SITE + "assets/themes/" + f + ".json?v=19";
+      var url = SITE + "assets/themes/" + f + ".json?v=20";
       return (mans[f] = fetch(url).then(function (r) { return r.json(); }).catch(function () { delete mans[f]; return null; }));
     }
     function show(id, force) {
@@ -124,7 +124,7 @@
     var menu = document.createElement("div"); menu.className = "tmenu"; menu.hidden = true; menu.setAttribute("role", "menu");
     T.forEach(function (t) {
       var b = document.createElement("button"); b.type = "button"; b.setAttribute("role", "menuitem"); b.setAttribute("data-id", t.id);
-      b.innerHTML = '<span class="em">' + t.label + '</span>'; b.setAttribute("aria-label", t.name); b.title = t.name;
+      b.innerHTML = '<span class="em">' + t.label + '</span>'; b.setAttribute("aria-label", t.name);
       b.onclick = function () { choose(t.id); close(); };
       menu.appendChild(b);
     });

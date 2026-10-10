@@ -34,4 +34,5 @@ body.hdr-center .top.bar { justify-content: center; }
 .doc, .doc p, .doc li, .doc td, .doc th, .nav a, .foot, .foot a, .btn { font-family: var(--body); }
 .doc { font-weight: 400; }
 .doc code, .doc kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-.hero h1 { font: 800 clamp(34px, 6vw, 52px)/1.02 var(--display); letter-spacing: -.035em; margin: 0; }
+/* same title look as the home page card */
+.hero h1 { font: 700 clamp(32px, 6vw, 40px)/1.05 var(--display); letter-spacing: -.03em; margin: 0; background: linear-gradient(90deg, #6b9bff, #cf7bf5); -webkit-background-clip: text; background-clip: text; color: transparent; }

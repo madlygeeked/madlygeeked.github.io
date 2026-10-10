@@ -111,14 +111,14 @@ body[data-theme] .facts, body[data-theme] .doc p, body[data-theme] .doc li { tex
 /* github: the icon pops and shakes */
 .socials a.gh { display: inline-flex; align-items: center; gap: 8px; }
 .socials a.gh svg { width: 18px; height: 18px; fill: currentColor; transition: transform .2s; }
-.socials a.gh img { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; transition: transform .2s; }
+.socials a.gh img { width: 24px; height: 24px; border-radius: 6px; object-fit: cover; transition: transform .2s; }
 .socials a.gh:hover svg, .socials a.gh:focus-visible svg, .socials a.gh:hover img, .socials a.gh:focus-visible img { animation: ghpop .7s ease both; }
 @keyframes ghpop { 0% { transform: scale(1) rotate(0); } 20% { transform: scale(1.5) rotate(-14deg); } 35% { transform: scale(1.5) rotate(12deg); } 50% { transform: scale(1.5) rotate(-10deg); } 65% { transform: scale(1.5) rotate(8deg); } 80% { transform: scale(1.5) rotate(-4deg); } 100% { transform: scale(1.4) rotate(0); } }
 @media (prefers-reduced-motion: reduce) { .btn.honey .hd { transition: none; } .socials a.gh:hover svg { animation: none; transform: scale(1.3); } }
 
 /* bear next to every link to madgeeked / chance */
 a.bearlink { white-space: nowrap; }
-a.bearlink img { width: 1.35em; height: 1.35em; vertical-align: -.38em; margin-right: .4em; border-radius: 50%; object-fit: cover; }
+a.bearlink img { width: 1.35em; height: 1.35em; vertical-align: -.38em; margin-right: .4em; border-radius: 5px; object-fit: cover; }
 
 /* phones: the chanceify card is a small row instead of a big block */
 @media (max-width: 600px) {
