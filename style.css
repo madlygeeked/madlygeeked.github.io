@@ -56,9 +56,9 @@ section { padding: 22px 0 8px; }
 @media (min-width: 720px) { .project { grid-template-columns: 1.3fr 1fr; padding: 34px; } }
 
 /* Scenic backgrounds (themes.js). Every theme gets an outline on the name and logo so they read on any scene. */
-#scene { position: fixed; inset: 0; z-index: -2; background: #0a0914; overflow: hidden; }
-#scene img { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; display: block; transition: opacity .5s; }
-body.scenic, body.scenic-docs { background: #0a0914; }
+#scene { position: fixed; inset: 0; z-index: -2; background: #ffb070; overflow: hidden; }
+#scene img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; display: block; transition: opacity .6s ease; }
+body.scenic, body.scenic-docs { background: transparent; }
 body.scenic #flow { display: none; }
 body.scenic-docs #flow { opacity: .85; }
 body[data-theme="honey"] { --panel: rgba(50, 24, 6, .55); --line: rgba(255, 220, 160, .28); }

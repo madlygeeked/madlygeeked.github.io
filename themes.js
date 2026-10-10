@@ -11,6 +11,7 @@
     { id: "autumn", label: "🍂", name: "autumn" },
     { id: "lake-teal", label: "🏞️", name: "lake" }
   ];
+  var BG = { "honey": "#ffb070", "golden": "#f4806a", "autumn": "#e8d3a8", "lake-teal": "#a6cdf0", "chanceify": "#2a1850" };
   function get() { try { return localStorage.getItem("mg-theme"); } catch (e) { return null; } }
   function put(v) { try { localStorage.setItem("mg-theme", v); } catch (e) {} }
   function find(id) { for (var i = 0; i < T.length; i++) if (T[i].id === id) return T[i]; return null; }
@@ -20,16 +21,25 @@
   function file(id) { return id + (pick[id] || ""); }
   function init() {
     var scene = document.createElement("div"); scene.id = "scene"; scene.setAttribute("aria-hidden", "true");
-    var img = document.createElement("img"); img.alt = ""; img.decoding = "async"; scene.appendChild(img);
     document.body.insertBefore(scene, document.body.firstChild);
     document.body.classList.add(PIN ? "scenic-docs" : "scenic");
-    var cur = "honey", shown = "", ui = null;
+    var cur = "honey", shown = "", ui = null, front = null, seq = 0;
+    // two stacked pictures: the new one is fully loaded and decoded, then fades in over the old one. nothing is ever left empty, so there is no black flash.
+    function layer() { var i = document.createElement("img"); i.alt = ""; i.decoding = "async"; scene.appendChild(i); return i; }
     function show(id) {
-      if (id === shown) return; shown = id;
+      if (id === shown) return; shown = id; var mine = ++seq;
       document.body.setAttribute("data-theme", id);
-      img.style.opacity = 0;
-      var n = new Image(); n.onload = function () { if (shown === id) { img.src = n.src; img.style.opacity = 1; } }; n.onerror = function () { img.style.opacity = 1; };
-      n.src = SITE + "assets/themes/" + file(id) + ".svg?v=10";
+      var bg = BG[id] || "#ffb070"; scene.style.background = bg; document.documentElement.style.background = bg;
+      var url = SITE + "assets/themes/" + file(id) + ".svg?v=11", n = new Image();
+      function go() {
+        if (mine !== seq) return;
+        var img = layer(); img.src = url; img.style.opacity = 0;
+        void img.offsetWidth; img.style.opacity = 1;
+        var old = front; front = img;
+        setTimeout(function () { if (old && old.parentNode) old.parentNode.removeChild(old); }, 700);
+      }
+      n.src = url;
+      if (n.decode) n.decode().then(go, go); else { n.onload = go; n.onerror = go; }
     }
     function choose(id) { cur = id; put(id); show(id); if (ui) ui.sync(); }
     if (PIN) { show(PIN); return; }
