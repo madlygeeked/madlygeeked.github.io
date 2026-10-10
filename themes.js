@@ -88,7 +88,7 @@
     // the new scene is built and fully decoded off screen, then fades in over the old one. nothing is ever left empty, so there is no black flash.
     function manifest(f) {
       if (mans[f]) return mans[f];
-      var url = SITE + "assets/themes/" + f + ".json?v=20";
+      var url = SITE + "assets/themes/" + f + ".json?v=21";
       return (mans[f] = fetch(url).then(function (r) { return r.json(); }).catch(function () { delete mans[f]; return null; }));
     }
     function show(id, force) {
