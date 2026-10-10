@@ -8,10 +8,9 @@
   var T = [
     { id: "honey", label: "🍯", name: "honey" },
     { id: "golden", label: "☀️", name: "golden hour" },
-    { id: "autumn", label: "🍂", name: "autumn" },
     { id: "lake-teal", label: "🏞️", name: "lake" }
   ];
-  var BG = { "honey": "#ffb070", "golden": "#f4806a", "autumn": "#e8d3a8", "lake-teal": "#a6cdf0", "chanceify": "#2a1850" };
+  var BG = { "honey": "#ffb070", "golden": "#f4806a", "lake-teal": "#a6cdf0", "chanceify": "#2a1850" };
 
   // ---------- scene player ----------
   // A scene is a list of small cropped pictures. Each one that moves sits in its own div and is animated with CSS transforms, so the phone's GPU
@@ -53,7 +52,7 @@
         var im = new Image(); im.alt = ""; im.decoding = "async"; im.draggable = false;
         im.style.cssText = "position:absolute;max-width:none;display:block;left:" + f2(c.x * k) + "px;top:" + f2(c.y * k) + "px;width:" + Math.ceil(c.w * k) + "px;height:" + Math.ceil(c.h * k) + "px";
         var retried = 0; im.onerror = function () { if (c.f && !retried++) im.src = base + "lay/" + c.f + ".svg?r=" + Date.now(); };
-        im.src = c.f ? base + "lay/" + c.f + ".svg?v=18" : "data:image/svg+xml;charset=utf-8," + encodeURIComponent(man.P[c.s]);
+        im.src = c.f ? base + "lay/" + c.f + ".svg?v=19" : "data:image/svg+xml;charset=utf-8," + encodeURIComponent(man.P[c.s]);
         p.appendChild(im); imgs.push(im);
       }
       function node(n, p) {
@@ -89,7 +88,7 @@
     // the new scene is built and fully decoded off screen, then fades in over the old one. nothing is ever left empty, so there is no black flash.
     function manifest(f) {
       if (mans[f]) return mans[f];
-      var url = SITE + "assets/themes/" + f + ".json?v=18";
+      var url = SITE + "assets/themes/" + f + ".json?v=19";
       return (mans[f] = fetch(url).then(function (r) { return r.json(); }).catch(function () { delete mans[f]; return null; }));
     }
     function show(id, force) {

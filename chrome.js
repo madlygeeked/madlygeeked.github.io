@@ -37,13 +37,16 @@
   };
 
   // a little bear next to every link to madgeeked or chance (golden bear for madgeeked, bear-wolf for chance)
+  // one of the golden bear logos, picked at random
+  var BEARS = ["honeycomb", "sun", "night", "cream", "square", "head"];
+  MG.bear = function () { return BEARS[Math.floor(Math.random() * BEARS.length)]; };
   MG.bears = function () {
     Array.prototype.forEach.call(document.querySelectorAll("a[href*='github.com/madlygeeked'], a[data-bear]"), function (a) {
       if (a.classList.contains("bearlink") || a.classList.contains("gh") || a.querySelector("svg")) return;
       var t = (a.textContent || "").trim().toLowerCase(), kind = a.getAttribute("data-bear");
       if (!kind) { if (t === "chance") kind = "chance"; else if (t === "madgeeked" || t === "madlygeeked") kind = "madgeeked"; }
       if (!kind) return;
-      var i = document.createElement("img"); i.src = MG.asset("assets/" + (kind === "chance" ? "chance.png" : "madgeeked.png")); i.alt = ""; i.width = 22; i.height = 22;
+      var i = document.createElement("img"); i.src = MG.asset("assets/bears/" + MG.bear() + ".png"); i.alt = ""; i.width = 22; i.height = 22;
       a.insertBefore(i, a.firstChild); a.classList.add("bearlink");
     });
   };

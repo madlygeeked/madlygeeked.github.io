@@ -38,7 +38,7 @@
     (d.socials || []).filter(function (x) { return x.public; }).forEach(function (x) {
       var a = el("a", { href: x.url });
       a.appendChild(document.createTextNode(x.name));
-      if (x.name === "github") { a.className = "gh"; a.insertAdjacentHTML("beforeend", '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="' + GH + '"/></svg>'); }
+      if (x.name === "github") { a.className = "gh"; a.appendChild(el("img", { src: MG.asset("assets/bears/" + MG.bear() + ".png"), alt: "", width: 22, height: 22 })); }
       s.appendChild(a);
     });
     more.appendChild(s);
