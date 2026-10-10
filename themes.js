@@ -14,6 +14,8 @@
   function get() { try { return localStorage.getItem("mg-theme"); } catch (e) { return null; } }
   function put(v) { try { localStorage.setItem("mg-theme", v); } catch (e) {} }
   function find(id) { for (var i = 0; i < T.length; i++) if (T[i].id === id) return T[i]; return null; }
+  var gold = Math.random() < .5 ? "golden" : "golden-b"; // golden hour: sun left or right, 50/50 each visit
+  function file(id) { return id === "golden" ? gold : id; }
   function init() {
     var scene = document.createElement("div"); scene.id = "scene"; scene.setAttribute("aria-hidden", "true");
     var img = document.createElement("img"); img.alt = ""; img.decoding = "async"; scene.appendChild(img);
@@ -25,7 +27,7 @@
       document.body.setAttribute("data-theme", id);
       img.style.opacity = 0;
       var n = new Image(); n.onload = function () { if (shown === id) { img.src = n.src; img.style.opacity = 1; } }; n.onerror = function () { img.style.opacity = 1; };
-      n.src = SITE + "assets/themes/" + id + ".svg?v=5";
+      n.src = SITE + "assets/themes/" + file(id) + ".svg?v=6";
     }
     function choose(id) { cur = id; put(id); show(id); if (ui) ui.sync(); }
     if (PIN) { show(PIN); return; }

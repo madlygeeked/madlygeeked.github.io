@@ -20,7 +20,7 @@
   }
   MG.apply = function (d) {
     var root = document.documentElement.style, f = d.fonts || {};
-    var stack = function (x) { return '"' + x.family + '", "Segoe UI", system-ui, sans-serif'; };
+    var stack = function (x) { return '"' + x.family + '", "Helvetica Neue", Arial, system-ui, sans-serif'; };
     if (f.body && f.body.family) { loadFont(f.body); root.setProperty("--body", stack(f.body)); root.setProperty("--display", stack(f.body)); }
     if (f.name && f.name.family) {
       loadFont(f.name);

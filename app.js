@@ -32,7 +32,7 @@
       wrap.appendChild(el("section", {}, [art]));
     });
     var more = el("div", { className: "more" }, []);
-    if (d.coffee && d.coffee.url) more.appendChild(el("a", { className: "btn honey", href: d.coffee.url, textContent: d.coffee.label + (d.coffee.emoji ? " " + d.coffee.emoji : "") }));
+    if (d.coffee && d.coffee.url) { var hb = el("a", { className: "btn honey", href: d.coffee.url }); hb.appendChild(el("span", { className: "hd" })); if (d.coffee.emoji) hb.appendChild(el("span", { className: "hn", textContent: d.coffee.emoji })); hb.appendChild(el("span", { className: "hl", textContent: d.coffee.label })); more.appendChild(hb); }
     var s = el("nav", { className: "socials" }, []);
     s.setAttribute("aria-label", "links");
     (d.socials || []).filter(function (x) { return x.public; }).forEach(function (x) {
