@@ -7,7 +7,11 @@
     "url": "https://buymeacoffee.com/madlygeeked"
   },
   "socials": [
-    { "name": "github", "url": "https://github.com/madlygeeked", "public": true }
+    {
+      "name": "github",
+      "url": "https://github.com/madlygeeked",
+      "public": true
+    }
   ],
   "projects": [
     {
@@ -21,8 +25,25 @@
         "Made with love"
       ],
       "links": [
-        { "label": "Download", "url": "https://github.com/madlygeeked/chanceify/releases", "primary": true }
+        {
+          "label": "Download",
+          "url": "https://github.com/madlygeeked/chanceify/releases",
+          "primary": true
+        }
       ]
     }
-  ]
+  ],
+  "fonts": {
+    "name": {
+      "family": "Outfit",
+      "gf": "Outfit:wght@100..900",
+      "weight": 300,
+      "size": 0.65,
+      "spacing": -0.055
+    },
+    "body": {
+      "family": "Outfit",
+      "gf": "Outfit:wght@100..900"
+    }
+  }
 }

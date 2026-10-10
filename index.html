@@ -26,12 +26,14 @@
   html { color-scheme: dark; }
   body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
   a { color: inherit; }
+  .gh { display: inline-flex; align-items: center; gap: 8px; }
+  .gh svg { width: 18px; height: 18px; fill: currentColor; }
   a:focus-visible, button:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; border-radius: 6px; }
   .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
 
   header { display: flex; align-items: center; gap: 22px; padding: 64px 0 28px; }
   header img { width: clamp(56px, 11vw, 92px); height: auto; flex: none; }
-  h1 { font: 800 clamp(44px, 11vw, 104px)/.92 var(--display); letter-spacing: -.045em; margin: 0; }
+  h1 { font-family: var(--namefont, var(--display)); font-weight: var(--namew, 800); font-size: calc(var(--ns, 1) * min(88px, 14vw)); line-height: .95; letter-spacing: var(--nametrack, -.045em); margin: 0; }
 
   /* Flow: sheets of colour folded over each other, drawn like chanceify's visualizer. */
   .flow { display: block; width: 100%; height: clamp(150px, 26vw, 230px); }
@@ -86,7 +88,28 @@
     (kids || []).forEach(function (c) { n.appendChild(c); });
     return n;
   }
+  var GH = "M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z";
+  function fonts(f) {
+    if (!f) return;
+    var root = document.documentElement.style, seen = {};
+    function load(x) {
+      if (!x || !x.gf || seen[x.gf]) return; seen[x.gf] = 1;
+      var l = document.createElement("link"); l.rel = "stylesheet";
+      l.href = "https://fonts.googleapis.com/css2?family=" + x.gf + "&display=swap";
+      document.head.appendChild(l);
+    }
+    var stack = function (x) { return '"' + x.family + '", "Segoe UI", system-ui, sans-serif'; };
+    if (f.body && f.body.family) { load(f.body); root.setProperty("--body", stack(f.body)); root.setProperty("--display", stack(f.body)); }
+    if (f.name && f.name.family) {
+      load(f.name);
+      root.setProperty("--namefont", stack(f.name));
+      if (f.name.weight) root.setProperty("--namew", f.name.weight);
+      if (f.name.size) root.setProperty("--ns", f.name.size);
+      if (f.name.spacing !== undefined) root.setProperty("--nametrack", f.name.spacing + "em");
+    }
+  }
   function render(d) {
+    fonts(d.fonts);
     if (d.name) { document.getElementById("name").textContent = d.name; document.title = d.name; }
     if (d.logo) { var l = document.getElementById("logo"); l.src = d.logo; l.hidden = false; }
     var box = document.getElementById("projects");
@@ -113,7 +136,13 @@
     }
     var s = document.getElementById("socials");
     (d.socials || []).filter(function (x) { return x.public; }).forEach(function (x) {
-      s.appendChild(el("a", { href: x.url, textContent: x.name }));
+      var a = el("a", { href: x.url });
+      if (x.name === "github") {
+        a.className = "gh";
+        a.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="' + GH + '"/></svg>';
+      }
+      a.appendChild(document.createTextNode(x.name));
+      s.appendChild(a);
     });
   }
   fetch("projects.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).then(render).catch(function () {});
