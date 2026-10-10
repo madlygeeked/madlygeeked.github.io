@@ -52,7 +52,8 @@
         if (!vis(c.r)) return;
         var im = new Image(); im.alt = ""; im.decoding = "async"; im.draggable = false;
         im.style.cssText = "position:absolute;max-width:none;display:block;left:" + f2(c.x * k) + "px;top:" + f2(c.y * k) + "px;width:" + Math.ceil(c.w * k) + "px;height:" + Math.ceil(c.h * k) + "px";
-        im.src = c.f ? base + "lay/" + c.f + ".svg" : "data:image/svg+xml;charset=utf-8," + encodeURIComponent(man.P[c.s]);
+        var retried = 0; im.onerror = function () { if (!retried++) im.src = base + "lay/" + c.f + ".svg?r=" + Date.now(); };
+        im.src = c.f ? base + "lay/" + c.f + ".svg?v=14" : "data:image/svg+xml;charset=utf-8," + encodeURIComponent(man.P[c.s]);
         p.appendChild(im); imgs.push(im);
       }
       function node(n, p) {
@@ -71,8 +72,8 @@
     return { build: build };
   })();
   window.MGScene = window.MGScene || MGScene;
-  function get() { try { return localStorage.getItem("mg-theme"); } catch (e) { return null; } }
-  function put(v) { try { localStorage.setItem("mg-theme", v); } catch (e) {} }
+  function get() { try { return sessionStorage.getItem("mg-theme"); } catch (e) { return null; } }   // per tab: a refresh keeps the theme, a new tab picks a new one
+  function put(v) { try { sessionStorage.setItem("mg-theme", v); } catch (e) {} }
   function find(id) { for (var i = 0; i < T.length; i++) if (T[i].id === id) return T[i]; return null; }
   // some themes have several versions; one is picked at random on each visit
   var VARIANTS = { "golden": ["", "-b"], "lake-teal": ["", "-b"], "honey": ["", "-b", "-c", "-d"] }, pick = {};
@@ -88,7 +89,7 @@
     // the new scene is built and fully decoded off screen, then fades in over the old one. nothing is ever left empty, so there is no black flash.
     function manifest(f) {
       if (mans[f]) return mans[f];
-      var url = SITE + "assets/themes/" + f + ".json?v=14";
+      var url = SITE + "assets/themes/" + f + ".json?v=15";
       return (mans[f] = fetch(url).then(function (r) { return r.json(); }).catch(function () { delete mans[f]; return null; }));
     }
     function show(id, force) {
@@ -112,7 +113,7 @@
     window.addEventListener("resize", function () {
       clearTimeout(rt); rt = setTimeout(function () { if (Math.abs(innerWidth - lw) > 60 || Math.abs(innerHeight - lh) > 120) { lw = innerWidth; lh = innerHeight; show(shown, true); } }, 350);
     });
-    function choose(id) { cur = id; show(id); if (ui) ui.sync(); }
+    function choose(id) { cur = id; put(id); show(id); if (ui) ui.sync(); }
     if (PIN) { show(PIN); return; }
 
     // the one theme button
@@ -138,7 +139,7 @@
       var t = find(cur); em.textContent = t ? t.label : "";
       Array.prototype.forEach.call(menu.children, function (b) { b.setAttribute("aria-current", b.getAttribute("data-id") === cur ? "true" : "false"); });
     } };
-    cur = T[Math.floor(Math.random() * T.length)].id; var qp = /[?&]theme=([\w-]+)/.exec(location.search); if (qp && find(qp[1])) cur = qp[1]; ui.sync(); show(cur);   // a new theme on every visit
+    cur = find(get()) ? get() : T[Math.floor(Math.random() * T.length)].id; put(cur); var qp = /[?&]theme=([\w-]+)/.exec(location.search); if (qp && find(qp[1])) cur = qp[1]; ui.sync(); show(cur);   // a new theme on every visit
 
     // (hover / press-and-hold previews were removed: they made the page lag. the chanceify docs have their own pinned theme.)
   }
