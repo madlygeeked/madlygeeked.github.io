@@ -27,7 +27,7 @@
       document.body.setAttribute("data-theme", id);
       img.style.opacity = 0;
       var n = new Image(); n.onload = function () { if (shown === id) { img.src = n.src; img.style.opacity = 1; } }; n.onerror = function () { img.style.opacity = 1; };
-      n.src = SITE + "assets/themes/" + file(id) + ".svg?v=8";
+      n.src = SITE + "assets/themes/" + file(id) + ".svg?v=9";
     }
     function choose(id) { cur = id; put(id); show(id); if (ui) ui.sync(); }
     if (PIN) { show(PIN); return; }
