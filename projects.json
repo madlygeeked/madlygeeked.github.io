@@ -29,8 +29,13 @@
           "label": "Download",
           "url": "https://github.com/madlygeeked/chanceify/releases",
           "primary": true
+        },
+        {
+          "label": "Source code",
+          "url": "https://github.com/madlygeeked/chanceify"
         }
-      ]
+      ],
+      "slug": "chanceify"
     }
   ],
   "fonts": {
