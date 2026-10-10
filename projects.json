@@ -35,7 +35,7 @@
           "url": "https://github.com/madlygeeked/chanceify"
         }
       ],
-      "slug": "chanceify"
+      "more": "chanceify/"
     }
   ],
   "fonts": {
@@ -50,5 +50,8 @@
       "family": "Outfit",
       "gf": "Outfit:wght@100..900"
     }
+  },
+  "layout": {
+    "header": "left"
   }
 }
