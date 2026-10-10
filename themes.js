@@ -52,7 +52,7 @@
         if (!vis(c.r)) return;
         var im = new Image(); im.alt = ""; im.decoding = "async"; im.draggable = false;
         im.style.cssText = "position:absolute;max-width:none;display:block;left:" + f2(c.x * k) + "px;top:" + f2(c.y * k) + "px;width:" + Math.ceil(c.w * k) + "px;height:" + Math.ceil(c.h * k) + "px";
-        im.src = c.f ? base + "_l/" + c.f + ".svg" : "data:image/svg+xml;charset=utf-8," + encodeURIComponent(man.P[c.s]);
+        im.src = c.f ? base + "lay/" + c.f + ".svg" : "data:image/svg+xml;charset=utf-8," + encodeURIComponent(man.P[c.s]);
         p.appendChild(im); imgs.push(im);
       }
       function node(n, p) {
@@ -88,7 +88,7 @@
     // the new scene is built and fully decoded off screen, then fades in over the old one. nothing is ever left empty, so there is no black flash.
     function manifest(f) {
       if (mans[f]) return mans[f];
-      var url = SITE + "assets/themes/" + f + ".json?v=13";
+      var url = SITE + "assets/themes/" + f + ".json?v=14";
       return (mans[f] = fetch(url).then(function (r) { return r.json(); }).catch(function () { delete mans[f]; return null; }));
     }
     function show(id, force) {
@@ -140,26 +140,7 @@
     } };
     cur = T[Math.floor(Math.random() * T.length)].id; var qp = /[?&]theme=([\w-]+)/.exec(location.search); if (qp && find(qp[1])) cur = qp[1]; ui.sync(); show(cur);   // a new theme on every visit
 
-    // hover (mouse) previews the card's theme
-    var hov = null, canHover = window.matchMedia && matchMedia("(hover: hover)").matches;
-    function target(e) { return e.target && e.target.closest ? e.target.closest("[data-hover-theme]") : null; }
-    function over(e) { var a = target(e); if (a === hov) return; hov = a; show(a ? a.getAttribute("data-hover-theme") : cur); }
-    if (canHover) document.addEventListener("mouseover", over);
-    document.addEventListener("focusin", over);
-    document.addEventListener("focusout", function () { if (hov) { hov = null; show(cur); } });
-
-    // press and hold (phone) previews it too; letting go goes back
-    var timer = null, held = false;
-    document.addEventListener("touchstart", function (e) {
-      var a = target(e); if (!a) return; held = false;
-      clearTimeout(timer);
-      timer = setTimeout(function () { held = true; show(a.getAttribute("data-hover-theme")); if (navigator.vibrate) try { navigator.vibrate(12); } catch (x) {} }, 350);
-    }, { passive: true });
-    function release(e) { clearTimeout(timer); if (held) { held = false; show(cur); if (e && e.cancelable && e.type === "touchend") e.preventDefault(); } }
-    document.addEventListener("touchend", release);
-    document.addEventListener("touchcancel", release);
-    document.addEventListener("touchmove", function () { if (!held) clearTimeout(timer); }, { passive: true });
-    document.addEventListener("contextmenu", function (e) { if (held || target(e) && !canHover) e.preventDefault(); });
+    // (hover / press-and-hold previews were removed: they made the page lag. the chanceify docs have their own pinned theme.)
   }
   if (document.body) init(); else document.addEventListener("DOMContentLoaded", init);
 })();
