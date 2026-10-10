@@ -57,7 +57,8 @@ section { padding: 22px 0 8px; }
 
 /* Scenic backgrounds (themes.js). Every theme gets an outline on the name and logo so they read on any scene. */
 #scene { position: fixed; inset: 0; z-index: -2; background: #ffb070; overflow: hidden; }
-#scene img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; display: block; transition: opacity .6s ease; }
+.mgs { position: absolute; inset: 0; overflow: hidden; transition: opacity .6s ease; pointer-events: none; }
+.mgs img { max-width: none; display: block; }
 body.scenic, body.scenic-docs { background: transparent; }
 body.scenic #flow { display: none; }
 body.scenic-docs #flow { opacity: .85; }
@@ -82,7 +83,7 @@ body[data-theme] .socials a { text-shadow: 0 1px 6px rgba(0, 0, 0, .6); }
 .themes.open .ar svg { transform: rotate(180deg); }
 .tmenu { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
 .tmenu[hidden] { display: none; }
-.tmenu button { display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px 8px 12px; }
+.tmenu button { display: inline-flex; align-items: center; justify-content: center; padding: 8px 14px; }
 .tmenu button[aria-current="true"] { box-shadow: 0 0 0 2px rgba(255, 255, 255, .9); }
 @media (hover: none) { [data-hover-theme] { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; } }
 .top a.brand { flex-direction: row-reverse; }

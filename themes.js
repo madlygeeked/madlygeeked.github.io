@@ -12,6 +12,65 @@
     { id: "lake-teal", label: "🏞️", name: "lake" }
   ];
   var BG = { "honey": "#ffb070", "golden": "#f4806a", "autumn": "#e8d3a8", "lake-teal": "#a6cdf0", "chanceify": "#2a1850" };
+
+  // ---------- scene player ----------
+  // A scene is a list of small cropped pictures. Each one that moves sits in its own div and is animated with CSS transforms, so the phone's GPU
+  // moves the layers around and nothing gets repainted. Pictures that are off screen are not built at all.
+  var MGScene = (function () {
+    function f2(v) { return (Math.round(v * 100) / 100); }
+    function frames(sp, k) {
+      var n = sp.f.length, o = "", cen = false, i, f;
+      for (i = 0; i < n; i++) if (sp.f[i][2] || sp.f[i][3]) cen = true;
+      for (i = 0; i < n; i++) {
+        f = sp.f[i]; var v, t = sp.t;
+        if (t === "tr") v = "transform:translate(" + f2(f[1] * k) + "px," + f2(f[2] * k) + "px)";
+        else if (t === "rot") v = "transform:" + (cen ? "translate(" + f2(f[2] * k) + "px," + f2(f[3] * k) + "px) rotate(" + f[1] + "deg) translate(" + f2(-f[2] * k) + "px," + f2(-f[3] * k) + "px)" : "rotate(" + f[1] + "deg)");
+        else if (t === "sc") { var c = f[3] || f[4]; v = "transform:" + (c ? "translate(" + f2(f[3] * k) + "px," + f2(f[4] * k) + "px) scale(" + f[1] + "," + f[2] + ") translate(" + f2(-f[3] * k) + "px," + f2(-f[4] * k) + "px)" : "scale(" + f[1] + "," + f[2] + ")"); }
+        else if (t === "sk") v = "transform:skewX(" + f[1] + "deg)";
+        else v = "opacity:" + f[1];
+        o += f2(f[0] * 100) + "%{" + v + (i < n - 1 && sp.e[i] !== "linear" ? ";animation-timing-function:" + sp.e[i] : "") + "}";
+      }
+      return o;
+    }
+    function build(man, base, vw, vh, opt) {
+      opt = opt || {};
+      var k = Math.max(vw / man.w, vh / man.h), ox = (vw - man.w * k) / 2, oy = vh - man.h * k, low = !!opt.low, still = !!opt.still, M = 40;
+      var root = document.createElement("div"); root.className = "mgs";
+      var frame = document.createElement("div"); frame.style.cssText = "position:absolute;left:" + ox + "px;top:" + oy + "px;width:0;height:0";
+      root.appendChild(frame);
+      var names = {}, css = "", imgs = [];
+      function vis(r) { return r[2] * k + ox > -M && r[0] * k + ox < vw + M && r[3] * k + oy > -M && r[1] * k + oy < vh + M; }
+      function div(p) { var d = document.createElement("div"); d.style.cssText = "position:absolute;left:0;top:0;width:0;height:0"; p.appendChild(d); return d; }
+      function anim(d, sp) {
+        if (still) return;
+        var key = sp.t + JSON.stringify(sp.f) + sp.e.join(""), nm = names[key];
+        if (!nm) { nm = names[key] = "k" + Object.keys(names).length; css += "@keyframes " + nm + "{" + frames(sp, k) + "}"; }
+        d.style.animation = nm + " " + sp.d + "s linear " + (-sp.l) + "s infinite";
+        d.style.willChange = sp.t === "op" ? "opacity" : "transform";
+      }
+      function leaf(c, p) {
+        if (!vis(c.r)) return;
+        var im = new Image(); im.alt = ""; im.decoding = "async"; im.draggable = false;
+        im.style.cssText = "position:absolute;max-width:none;display:block;left:" + f2(c.x * k) + "px;top:" + f2(c.y * k) + "px;width:" + Math.ceil(c.w * k) + "px;height:" + Math.ceil(c.h * k) + "px";
+        im.src = c.f ? base + "_l/" + c.f + ".svg" : "data:image/svg+xml;charset=utf-8," + encodeURIComponent(man.P[c.s]);
+        p.appendChild(im); imgs.push(im);
+      }
+      function node(n, p) {
+        if (!vis(n.r) || (low && n.lo)) return;
+        var el = p, d, i;
+        if (n.m) { d = div(el); d.style.transform = "matrix(" + [n.m[0], n.m[1], n.m[2], n.m[3], f2(n.m[4] * k), f2(n.m[5] * k)].join(",") + ")"; el = d; }
+        if (n.a) for (i = 0; i < n.a.length; i++) { d = div(el); anim(d, n.a[i]); el = d; }
+        for (i = 0; i < n.c.length; i++) { if (n.c[i].c) node(n.c[i], el); else leaf(n.c[i], el); }
+      }
+      for (var i = 0; i < man.T.length; i++) { if (man.T[i].c) node(man.T[i], frame); else leaf(man.T[i], frame); }
+      var st = document.createElement("style"); st.textContent = css; root.appendChild(st);
+      var ready = Promise.all(imgs.map(function (im) { return im.decode ? im.decode().catch(function () {}) : Promise.resolve(); }));
+      var timeout = new Promise(function (r) { setTimeout(r, 7000); });
+      return { el: root, ready: Promise.race([ready, timeout]) };
+    }
+    return { build: build };
+  })();
+  window.MGScene = window.MGScene || MGScene;
   function get() { try { return localStorage.getItem("mg-theme"); } catch (e) { return null; } }
   function put(v) { try { localStorage.setItem("mg-theme", v); } catch (e) {} }
   function find(id) { for (var i = 0; i < T.length; i++) if (T[i].id === id) return T[i]; return null; }
@@ -23,25 +82,37 @@
     var scene = document.createElement("div"); scene.id = "scene"; scene.setAttribute("aria-hidden", "true");
     document.body.insertBefore(scene, document.body.firstChild);
     document.body.classList.add(PIN ? "scenic-docs" : "scenic");
-    var cur = "honey", shown = "", ui = null, front = null, seq = 0;
-    // two stacked pictures: the new one is fully loaded and decoded, then fades in over the old one. nothing is ever left empty, so there is no black flash.
-    function layer() { var i = document.createElement("img"); i.alt = ""; i.decoding = "async"; scene.appendChild(i); return i; }
-    function show(id) {
-      if (id === shown) return; shown = id; var mine = ++seq;
+    var cur = "honey", shown = "", ui = null, front = null, seq = 0, mans = {};
+    var low = Math.min(screen.width || 9999, screen.height || 9999) <= 500;
+    var still = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+    // the new scene is built and fully decoded off screen, then fades in over the old one. nothing is ever left empty, so there is no black flash.
+    function manifest(f) {
+      if (mans[f]) return mans[f];
+      var url = SITE + "assets/themes/" + f + ".json?v=13";
+      return (mans[f] = fetch(url).then(function (r) { return r.json(); }).catch(function () { delete mans[f]; return null; }));
+    }
+    function show(id, force) {
+      if (id === shown && !force) return; shown = id; var mine = ++seq;
       document.body.setAttribute("data-theme", id);
       var bg = BG[id] || "#ffb070"; scene.style.background = bg; document.documentElement.style.background = bg;
-      var url = SITE + "assets/themes/" + file(id) + ".svg?v=11", n = new Image();
-      function go() {
-        if (mine !== seq) return;
-        var img = layer(); img.src = url; img.style.opacity = 0;
-        void img.offsetWidth; img.style.opacity = 1;
-        var old = front; front = img;
-        setTimeout(function () { if (old && old.parentNode) old.parentNode.removeChild(old); }, 700);
-      }
-      n.src = url;
-      if (n.decode) n.decode().then(go, go); else { n.onload = go; n.onerror = go; }
+      var f = file(id);
+      manifest(f).then(function (man) {
+        if (!man || mine !== seq) return;
+        var sc = MGScene.build(man, SITE + "assets/themes/", scene.clientWidth || innerWidth, scene.clientHeight || innerHeight, { low: low, still: still });
+        sc.el.style.opacity = 0; scene.appendChild(sc.el);
+        sc.ready.then(function () {
+          if (mine !== seq) { if (sc.el.parentNode) sc.el.parentNode.removeChild(sc.el); return; }
+          void sc.el.offsetWidth; sc.el.style.opacity = 1;
+          var old = front; front = sc.el;
+          setTimeout(function () { if (old && old.parentNode) old.parentNode.removeChild(old); }, 700);
+        });
+      });
     }
-    function choose(id) { cur = id; put(id); show(id); if (ui) ui.sync(); }
+    var rt = null, lw = innerWidth, lh = innerHeight;
+    window.addEventListener("resize", function () {
+      clearTimeout(rt); rt = setTimeout(function () { if (Math.abs(innerWidth - lw) > 60 || Math.abs(innerHeight - lh) > 120) { lw = innerWidth; lh = innerHeight; show(shown, true); } }, 350);
+    });
+    function choose(id) { cur = id; show(id); if (ui) ui.sync(); }
     if (PIN) { show(PIN); return; }
 
     // the one theme button
@@ -53,7 +124,7 @@
     var menu = document.createElement("div"); menu.className = "tmenu"; menu.hidden = true; menu.setAttribute("role", "menu");
     T.forEach(function (t) {
       var b = document.createElement("button"); b.type = "button"; b.setAttribute("role", "menuitem"); b.setAttribute("data-id", t.id);
-      b.innerHTML = '<span class="em">' + t.label + '</span><span class="nm">' + t.name + '</span>';
+      b.innerHTML = '<span class="em">' + t.label + '</span>'; b.setAttribute("aria-label", t.name); b.title = t.name;
       b.onclick = function () { choose(t.id); close(); };
       menu.appendChild(b);
     });
@@ -67,7 +138,7 @@
       var t = find(cur); em.textContent = t ? t.label : "";
       Array.prototype.forEach.call(menu.children, function (b) { b.setAttribute("aria-current", b.getAttribute("data-id") === cur ? "true" : "false"); });
     } };
-    var saved = get(); cur = find(saved) ? saved : "honey"; ui.sync(); show(cur);
+    cur = T[Math.floor(Math.random() * T.length)].id; var qp = /[?&]theme=([\w-]+)/.exec(location.search); if (qp && find(qp[1])) cur = qp[1]; ui.sync(); show(cur);   // a new theme on every visit
 
     // hover (mouse) previews the card's theme
     var hov = null, canHover = window.matchMedia && matchMedia("(hover: hover)").matches;
