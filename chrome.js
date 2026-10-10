@@ -29,7 +29,7 @@
       if (f.name.size) root.setProperty("--ns", f.name.size);
       if (f.name.spacing !== undefined) root.setProperty("--nametrack", f.name.spacing + "em");
     }
-    var h = (d.layout && d.layout.header) || "left";
+    var h = (d.layout && d.layout.header) || "right";
     ["left", "right", "center", "hero"].forEach(function (k) { document.body.classList.toggle("hdr-" + k, k === h); });
     Array.prototype.forEach.call(document.querySelectorAll("[data-brand-name]"), function (n) { n.textContent = d.name || ""; });
     Array.prototype.forEach.call(document.querySelectorAll("[data-brand-logo]"), function (n) { if (d.logo) { n.src = MG.asset(d.logo); n.hidden = false; } });
@@ -37,7 +37,7 @@
   };
   MG.start = function () {
     if (document.getElementById("flow") && !document.getElementById("flow").getAttribute("data-on")) {
-      var s = document.createElement("script"); s.src = SITE + "flow.js"; document.body.appendChild(s);
+      var s = document.createElement("script"); s.src = SITE + "flow.js?v=4"; document.body.appendChild(s);
     }
   };
   if (!window.MG_MANUAL) {

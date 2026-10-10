@@ -16,7 +16,7 @@
   "projects": [
     {
       "name": "chanceify™",
-      "tagline": "Music Reimagined",
+      "tagline": "music reimagined",
       "logo": "assets/chanceify.png",
       "public": true,
       "facts": [
@@ -52,6 +52,6 @@
     }
   },
   "layout": {
-    "header": "left"
+    "header": "right"
   }
 }
