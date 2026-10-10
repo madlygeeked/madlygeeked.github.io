@@ -20,18 +20,18 @@
       "logo": "assets/chanceify.png",
       "public": true,
       "facts": [
-        "Needs Spotify Premium",
-        "Last.fm scrobbling",
-        "Made with love"
+        "needs spotify premium",
+        "last.fm scrobbling",
+        "made with love"
       ],
       "links": [
         {
-          "label": "Download",
+          "label": "download",
           "url": "https://github.com/madlygeeked/chanceify/releases",
           "primary": true
         },
         {
-          "label": "Source code",
+          "label": "source code",
           "url": "https://github.com/madlygeeked/chanceify"
         }
       ],

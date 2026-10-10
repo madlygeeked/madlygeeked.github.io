@@ -25,7 +25,7 @@
       var actions = el("div", { className: "actions" }, []);
       var dl = (p.links || []).filter(function (a) { return a.primary; })[0];
       if (dl) actions.appendChild(btn({ label: dl.label, url: dl.url, primary: true }));
-      if (p.more) actions.appendChild(btn({ label: "More info", url: p.more }));
+      if (p.more) actions.appendChild(btn({ label: "more info", url: p.more }));
       var facts = el("ul", { className: "facts" }, (p.facts || []).map(function (f) { return el("li", { textContent: f }); }));
       wrap.appendChild(el("section", {}, [el("article", { className: "project" }, [el("div", {}, [h, actions]), facts])]));
     });
