@@ -20,8 +20,8 @@
       "logo": "assets/chanceify.png",
       "public": true,
       "facts": [
-        "premium only needed to stream",
-        "last.fm scrobbling",
+        "needs premium to stream",
+        "local library, last.fm scrobbling",
         "made with love"
       ],
       "links": [
