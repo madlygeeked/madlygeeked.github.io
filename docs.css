@@ -27,7 +27,7 @@ body.hdr-center .top.bar { justify-content: center; }
 .shots img { display: block; width: 100%; height: auto; }
 .shots figcaption { padding: 10px 12px 12px; font-size: 14px; color: var(--dim); }
 .shots figcaption b { display: block; color: var(--text); font-size: 15px; margin-bottom: 2px; }
-.foot { color: var(--dim); font-size: 15px; padding: 8px 0 56px; }
+.foot { color: var(--dim); font-size: 15px; padding: 8px 0 56px; text-align: center; }
 .foot a { text-underline-offset: 3px; }
 
 /* every docs page: the same family and weights as the main page */

@@ -20,7 +20,7 @@
       "logo": "assets/chanceify.png",
       "public": true,
       "facts": [
-        "needs spotify premium",
+        "premium only needed to stream",
         "last.fm scrobbling",
         "made with love"
       ],
