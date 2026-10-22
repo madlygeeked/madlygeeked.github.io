@@ -39,7 +39,7 @@
       var a = el("a", { href: x.url });
       a.appendChild(document.createTextNode(x.name));
       if (x.name === "github") { a.className = "gh"; a.appendChild(el("img", { src: MG.asset("assets/bears/" + MG.bear() + ".png"), alt: "", width: 22, height: 22 })); }
-      else if (x.name === "rage.wtf") { a.className = "gh"; a.appendChild(el("img", { src: MG.asset("assets/rage.png"), alt: "", width: 22, height: 22 })); }
+      else if (x.name === "rage.wtf") { a.className = "gh"; a.appendChild(el("img", { src: MG.asset("assets/rage.png?v=2"), alt: "", width: 22, height: 22 })); }
       s.appendChild(a);
     });
     more.appendChild(s);

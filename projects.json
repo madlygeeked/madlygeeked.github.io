@@ -8,13 +8,13 @@
   },
   "socials": [
     {
-      "name": "github",
-      "url": "https://github.com/madlygeeked",
+      "name": "rage.wtf",
+      "url": "https://rage.wtf/chance",
       "public": true
     },
     {
-      "name": "rage.wtf",
-      "url": "https://rage.wtf/chance",
+      "name": "github",
+      "url": "https://github.com/madlygeeked",
       "public": true
     }
   ],
