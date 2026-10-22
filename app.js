@@ -12,7 +12,7 @@
   function render(d) {
     var app = document.getElementById("app");
     app.innerHTML = "";
-    document.title = d.name || "madgeeked";
+    document.title = d.name || "chance";
     var brand = el("a", { className: "brand" }, [el("img", { alt: "", hidden: true }), el("h1", { className: "brandname" })]);
     brand.setAttribute("data-brand-link", ""); brand.firstChild.setAttribute("data-brand-logo", ""); brand.lastChild.setAttribute("data-brand-name", "");
     var wrap = el("div", { className: "wrap" }, [el("div", { className: "top" }, [brand]), el("div", { className: "spacer" })]);

@@ -36,9 +36,8 @@
     Array.prototype.forEach.call(document.querySelectorAll("[data-brand-link]"), function (n) { n.href = SITE || "./"; });
   };
 
-  // a little bear next to every link to madgeeked or chance (golden bear for madgeeked, bear-wolf for chance)
-  // one of the golden bear logos, picked at random
-  var BEARS = ["v01", "v03", "v20", "v25", "v28", "v31", "v33", "v52", "v53"];
+  // the bear dog next to every link to madgeeked or chance
+  var BEARS = ["dog"];
   MG.bear = function () { return BEARS[Math.floor(Math.random() * BEARS.length)]; };
   MG.bears = function () {
     Array.prototype.forEach.call(document.querySelectorAll("a[href*='github.com/madlygeeked'], a[data-bear]"), function (a) {
